@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-const existingUsers = [
+const users = [
   {
     nombre: "Samuel",
     apellido: "Acero García",
