@@ -1,41 +1,144 @@
 const express = require("express");
-const axios = require("axios");
+const axios = require("axios"); 
 const app = express();
+
 
 app.use(express.json());
 
-const users = [
+
+const existingUsers = [
   {
-    nombre: "Juan",
-    apellido: "Perez",
-    correo: "juan@example.com",
-    ciudad: "Bogotá",
-    país: "Colombia",
+    nombre: "Samuel",
+    apellido: "Acero García",
   },
   {
-    nombre: "María",
-    apellido: "Gomez",
-    correo: "maria@example.com",
-    ciudad: "Medellín",
-    país: "Colombia",
+    nombre: "Darek",
+    apellido: "Aljuri Martínez",
   },
   {
-    nombre: "Pedro",
-    apellido: "Ramirez",
-    correo: "pedro@example.com",
-    ciudad: "Barranquilla",
-    país: "Colombia",
+    nombre: "Andrés",
+    apellido: "Azcona",
+  },
+  {
+    nombre: "Juan Felipe",
+    apellido: "Cepeda Uribe",
+  },
+  {
+    nombre: "Ana María",
+    apellido: "Chaves Pérez",
+  },
+  {
+    nombre: "Carlos David",
+    apellido: "Cruz Pavas",
+  },
+  {
+    nombre: "Diego Norberto",
+    apellido: "Díaz Algarín",
+  },
+  {
+    nombre: "Jorge Esteban",
+    apellido: "Díaz Bernal",
+  },
+  {
+    nombre: "David Esteban",
+    apellido: "Díaz Vargas",
+  },
+  {
+    nombre: "Juan José",
+    apellido: "Forero Peña",
+  },
+  {
+    nombre: "Santiago",
+    apellido: "Gutierrez De Piñeres Barbosa",
+  },
+  {
+    nombre: "Samuel Esteban",
+    apellido: "Lopez Huertas",
+  },
+  {
+    nombre: "Michael Steven",
+    apellido: "Medina Fernandez",
+  },
+  {
+    nombre: "Katherin Juliana",
+    apellido: "Moreno Carvajal",
+  },
+  {
+    nombre: "Juan Pablo",
+    apellido: "Moreno Patarroyo",
+  },
+  {
+    nombre: "Nicolás Esteban",
+    apellido: "Muñoz Sendoya",
+  },
+  {
+    nombre: "Santiago",
+    apellido: "Navarro Cuy",
+  },
+  {
+    nombre: "Juan Pablo",
+    apellido: "Parrado Morales",
+  },
+  {
+    nombre: "Daniel Santiago",
+    apellido: "Ramirez Chinchilla",
+  },
+  {
+    nombre: "Juan Pablo",
+    apellido: "Restrepo Coca",
+  },
+  {
+    nombre: "Gabriela",
+    apellido: "Reyes Gonzalez",
+  },
+  {
+    nombre: "Juan José",
+    apellido: "Rodriguez Falla",
+  },
+  {
+    nombre: "Valentina",
+    apellido: "Ruiz Torres",
+  },
+  {
+    nombre: "Mariana",
+    apellido: "Salas Gutierrez",
+  },
+  {
+    nombre: "Sebastian",
+    apellido: "Sanchez Sandoval",
+  },
+  {
+    nombre: "Josue David",
+    apellido: "Sarmiento Guarnizo",
+  },
+  {
+    nombre: "Santiago",
+    apellido: "Soler Prado",
+  },
+  {
+    nombre: "Maria Fernanda",
+    apellido: "Tamayo Lopez",
+  },
+  {
+    nombre: "Deivid Nicolas",
+    apellido: "Urrea Lara",
   },
 ];
 
+app.get("/", (req, res) => {
+  res.send(`Api de Samuel Esteban López`);
+});
+
 app.get("/coin/:coinName", async (req, res) => {
-  const coinName = req.params.coinName.toLowerCase();
+  const coinName = req.params.coinName.toLowerCase(); 
 
   try {
+    
     const response = await axios.get(
       `https://api.coincap.io/v2/assets/${coinName}`
     );
 
+    
     if (response.data.data) {
       const priceUsd = response.data.data.priceUsd;
       return res.send(
@@ -52,6 +155,7 @@ app.get("/coin/:coinName", async (req, res) => {
   }
 });
 
+
 app.get("/users/:count", (req, res) => {
   try {
     const count = parseInt(req.params.count);
@@ -62,19 +166,18 @@ app.get("/users/:count", (req, res) => {
         ? req.query.sort.toUpperCase()
         : "ASC";
 
-    const allUsers = [...users];
-
     const sortedUsers =
       sort === "ASC"
-        ? allUsers.sort((a, b) => a.apellido.localeCompare(b.apellido))
-        : allUsers.sort((a, b) => b.apellido.localeCompare(a.apellido));
+        ? existingUsers.slice(0, count)
+        : existingUsers.slice(-count).reverse();
 
-    res.json(sortedUsers.slice(0, count));
+    res.json(sortedUsers);
   } catch (error) {
     console.error("Error al procesar la solicitud de usuarios:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+
 
 app.post("/users", (req, res) => {
   try {
@@ -86,7 +189,7 @@ app.post("/users", (req, res) => {
       país = "Colombia",
     } = req.body;
     const newUser = { nombre, apellido, correo, ciudad, país };
-    users.push(newUser);
+    existingUsers.push(newUser);
 
     res.json(newUser);
   } catch (error) {
@@ -94,6 +197,7 @@ app.post("/users", (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
