@@ -153,7 +153,7 @@ app.get("/coin/:coinName", async (req, res) => {
 
 app.get("/users/:count", (req, res) => {
   try {
-    const count = parseInt(req.params.count);
+    const count = parseInt(req.params.count); // Convertir el parámetro count a número
     const sort =
       req.query.sort &&
       (req.query.sort.toUpperCase() === "ASC" ||
@@ -162,9 +162,7 @@ app.get("/users/:count", (req, res) => {
         : "ASC";
 
     const sortedUsers =
-      sort === "ASC"
-        ? existingUsers.slice(0, count)
-        : existingUsers.slice(-count).reverse();
+      sort === "ASC" ? users.slice(0, count) : users.slice(-count).reverse();
 
     res.json(sortedUsers);
   } catch (error) {
@@ -183,7 +181,7 @@ app.post("/users", (req, res) => {
       país = "Colombia",
     } = req.body;
     const newUser = { nombre, apellido, correo, ciudad, país };
-    existingUsers.push(newUser);
+    users.push(newUser);
 
     res.json(newUser);
   } catch (error) {
