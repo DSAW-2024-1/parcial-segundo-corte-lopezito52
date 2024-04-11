@@ -28,6 +28,10 @@ const users = [
   },
 ];
 
+app.get("/", (req, res) => {
+  res.send(`Api de Samuel Esteban López`);
+});
+
 app.get("/coin/:coinName", async (req, res) => {
   const coinName = req.params.coinName.toLowerCase();
 
