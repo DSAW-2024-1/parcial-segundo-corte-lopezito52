@@ -186,9 +186,14 @@ app.post("/users", (req, res) => {
       ciudad = "Bogotá",
       país = "Colombia",
     } = req.body;
-    const newUser = { nombre, apellido, correo, ciudad, país };
-    users.push(newUser);
 
+    
+    const newUser = { nombre, apellido, correo, ciudad, país };
+
+    
+    console.log("Nuevo usuario creado:", newUser);
+
+    
     res.json(newUser);
   } catch (error) {
     console.error("Error al crear el usuario:", error);

@@ -180,8 +180,10 @@ app.post("/users", (req, res) => {
       ciudad = "Bogotá",
       país = "Colombia",
     } = req.body;
+
     const newUser = { nombre, apellido, correo, ciudad, país };
-    users.push(newUser);
+
+    console.log("Nuevo usuario creado:", newUser);
 
     res.json(newUser);
   } catch (error) {
