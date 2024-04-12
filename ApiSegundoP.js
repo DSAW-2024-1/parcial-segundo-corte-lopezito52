@@ -127,6 +127,8 @@ app.get("/", (req, res) => {
   res.send(`Api de Samuel Esteban López`);
 });
 
+//ejmeplo de uso /coin/bitcon
+//link completo https://parcial-segundo-corte-lopezito52-44kp.vercel.app/coin/bitcoin
 app.get("/coin/:coinName", async (req, res) => {
   const coinName = req.params.coinName.toLowerCase();
 
@@ -151,9 +153,11 @@ app.get("/coin/:coinName", async (req, res) => {
   }
 });
 
+//ejemplo de uso /users/5?sort=ASC    /users/5?sort=DESC 
+//link completo https://parcial-segundo-corte-lopezito52-44kp.vercel.app/users/29?sort=ASC   https://parcial-segundo-corte-lopezito52-44kp.vercel.app/users/29?sort=DESC
 app.get("/users/:count", (req, res) => {
   try {
-    const count = parseInt(req.params.count); // Convertir el parámetro count a número
+    const count = parseInt(req.params.count); 
     const sort =
       req.query.sort &&
       (req.query.sort.toUpperCase() === "ASC" ||
@@ -170,6 +174,16 @@ app.get("/users/:count", (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+
+//ejemplo de uso /users
+/* {
+  "nombre": "Miguel",
+  "apellido": "Jaramillo",
+  "correo": "miguel@example.com",
+  "ciudad": "Medellín",
+  "país": "Colombia"
+} */
+//link completo https://parcial-segundo-corte-lopezito52-44kp.vercel.app/users
 
 app.post("/users", (req, res) => {
   try {

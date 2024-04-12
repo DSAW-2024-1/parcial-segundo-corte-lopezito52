@@ -1,10 +1,8 @@
 const express = require("express");
-const axios = require("axios"); 
+const axios = require("axios");
 const app = express();
 
-
 app.use(express.json());
-
 
 const users = [
   {
@@ -129,16 +127,16 @@ app.get("/", (req, res) => {
   res.send(`Api de Samuel Esteban López`);
 });
 
+//ejmeplo de uso /coin/bitcon
+//link completo https://parcial-segundo-corte-lopezito52-44kp.vercel.app/coin/bitcoin
 app.get("/coin/:coinName", async (req, res) => {
-  const coinName = req.params.coinName.toLowerCase(); 
+  const coinName = req.params.coinName.toLowerCase();
 
   try {
-    
     const response = await axios.get(
       `https://api.coincap.io/v2/assets/${coinName}`
     );
 
-    
     if (response.data.data) {
       const priceUsd = response.data.data.priceUsd;
       return res.send(
@@ -155,10 +153,11 @@ app.get("/coin/:coinName", async (req, res) => {
   }
 });
 
-
+//ejemplo de uso /users/5?sort=ASC    /users/5?sort=DESC
+//link completo https://parcial-segundo-corte-lopezito52-44kp.vercel.app/users/29?sort=ASC   https://parcial-segundo-corte-lopezito52-44kp.vercel.app/users/29?sort=DESC
 app.get("/users/:count", (req, res) => {
   try {
-    const count = parseInt(req.params.count); // Convertir el parámetro count a número
+    const count = parseInt(req.params.count);
     const sort =
       req.query.sort &&
       (req.query.sort.toUpperCase() === "ASC" ||
@@ -176,6 +175,15 @@ app.get("/users/:count", (req, res) => {
   }
 });
 
+//ejemplo de uso /users
+/* {
+  "nombre": "Miguel",
+  "apellido": "Jaramillo",
+  "correo": "miguel@example.com",
+  "ciudad": "Medellín",
+  "país": "Colombia"
+} */
+//link completo https://parcial-segundo-corte-lopezito52-44kp.vercel.app/users
 
 app.post("/users", (req, res) => {
   try {
@@ -187,20 +195,16 @@ app.post("/users", (req, res) => {
       país = "Colombia",
     } = req.body;
 
-    
     const newUser = { nombre, apellido, correo, ciudad, país };
 
-    
     console.log("Nuevo usuario creado:", newUser);
 
-    
     res.json(newUser);
   } catch (error) {
     console.error("Error al crear el usuario:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
