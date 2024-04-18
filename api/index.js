@@ -153,11 +153,11 @@ app.get("/coin/:coinName", async (req, res) => {
   }
 });
 
-//ejemplo de uso /users/5?sort=ASC    /users/5?sort=DESC 
+//ejemplo de uso /users/5?sort=ASC    /users/5?sort=DESC
 //link completo https://parcial-segundo-corte-lopezito52-44kp.vercel.app/users/29?sort=ASC   https://parcial-segundo-corte-lopezito52-44kp.vercel.app/users/29?sort=DESC
 app.get("/users/:count", (req, res) => {
   try {
-    const count = parseInt(req.params.count); 
+    const count = parseInt(req.params.count);
     const sort =
       req.query.sort &&
       (req.query.sort.toUpperCase() === "ASC" ||
